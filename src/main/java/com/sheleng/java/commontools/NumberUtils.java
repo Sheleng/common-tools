@@ -8,11 +8,99 @@ package com.sheleng.java.commontools;
  */
 public class NumberUtils {
 
+    public static final short U_BYTE_MIN_VALUE = 0, U_BYTE_MAX_VALUE = 255;
+    public static final int U_SHORT_MIN_VALUE = 0, U_SHORT_MAX_VALUE = 65535;
+    public static final long U_INT_MIN_VALUE = 0, U_INT_MAX_VALUE = 4294967295L;
+
     /**
      * 取消默认构造函数
      */
     private NumberUtils() {
-        throw new RuntimeException("NumberUtils.class cannot be instantiated");
+        throw new RuntimeException("NumberUtils.class can't be instantiated");
+    }
+
+    /**
+     * 有符号byte转无符号byte，无符号byte用short来替代
+     *
+     * @param sByte 有符号byte
+     * @return 无符号byte，由short类型替代
+     */
+    public static short sByte2uByte(byte sByte) {
+        short uByte = (short) (sByte & 0x00FF);
+        return uByte;
+    }
+
+    /**
+     * 无符号byte转有符号byte
+     *
+     * @param uByte 无符号byte
+     * @return 有符号byte
+     */
+    public static byte uByte2sByte(short uByte) {
+        if (uByte < U_BYTE_MIN_VALUE) {
+            throw new RuntimeException("uByte cannot be minus, uByte = " + uByte);
+        }
+        if (uByte > U_BYTE_MAX_VALUE) {
+            throw new RuntimeException("illegal uByte = " + uByte);
+        }
+        byte sByte = (byte) (uByte & 0x00FF);
+        return sByte;
+    }
+
+    /**
+     * 有符号short转无符号short，无符号short用int来代替
+     *
+     * @param sShort 有符号short
+     * @return 无符号short，由int类型替代
+     */
+    public static int sShort2uShort(short sShort) {
+        int uShort = (int) (sShort & 0x0000FFFF);
+        return uShort;
+    }
+
+    /**
+     * 无符号short转有符号short
+     *
+     * @param uShort 无符号short
+     * @return 有符号short
+     */
+    public static short uShort2sShort(int uShort) {
+        if (uShort < U_SHORT_MIN_VALUE) {
+            throw new RuntimeException("uShort cannot be minus, uShort = " + uShort);
+        }
+        if (uShort > U_SHORT_MAX_VALUE) {
+            throw new RuntimeException("illegal uShort = " + uShort);
+        }
+        short sShort = (short) (uShort & 0x0000FFFF);
+        return sShort;
+    }
+
+    /**
+     * 有符号int转无符号int，无符号int用long来代替
+     *
+     * @param sInt 有符号int
+     * @return 无符号int，由long类型替代
+     */
+    public static long sInt2uInt(int sInt) {
+        long uInt = sInt & 0x00000000FFFFFFFFL;
+        return uInt;
+    }
+
+    /**
+     * 无符号int转有符号int
+     *
+     * @param uInt 无符号int
+     * @return 有符号int
+     */
+    public static int uInt2sInt(long uInt) {
+        if (uInt < U_INT_MIN_VALUE) {
+            throw new RuntimeException("uShort cannot be minus, uInt = " + uInt);
+        }
+        if (uInt > U_INT_MAX_VALUE) {
+            throw new RuntimeException("illegal uInt = " + uInt);
+        }
+        int sInt = (int) (uInt & 0x00000000FFFFFFFFL);
+        return sInt;
     }
 
     /**
@@ -32,6 +120,7 @@ public class NumberUtils {
         }
         return bytes;
     }
+
     /**
      * 将长度为2的byte数组转成short类型的值
      *
@@ -77,6 +166,7 @@ public class NumberUtils {
         }
         return bytes;
     }
+
     /**
      * 将长度为4的byte数组转成int类型的值
      *
