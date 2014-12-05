@@ -154,7 +154,7 @@ public class IPRule {
             if (ruleIpArray.length != 4) {
                 throw new Exception("IP部分错误！");
             }
-            
+
             for (int i = 0; i < 4; i++) {
                 boolean AA = ruleIpArray[i].contains("*");
                 boolean BB = ruleIpArray[i].contains("-");
@@ -236,7 +236,7 @@ public class IPRule {
                 }
             }
             if (isFind) {
-                return retValue;//IP规则中 :后面的 yes/no 对应的 true false
+                return retValue;//IP规则中:后面的 yes/no 对应的 true false
             }
         }
         return false;
