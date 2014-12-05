@@ -154,8 +154,7 @@ public class IPRule {
             if (ruleIpArray.length != 4) {
                 throw new Exception("IP部分错误！");
             }
-
-            // region
+            
             for (int i = 0; i < 4; i++) {
                 boolean AA = ruleIpArray[i].contains("*");
                 boolean BB = ruleIpArray[i].contains("-");
@@ -168,14 +167,12 @@ public class IPRule {
                     if (!Regex.isMatch(ruleIpArray[i], IP_BLOCK_REGEX)) {
                         throw new Exception("IP段错，应该在1~255之间：" + ruleIpArray[i] + "。");
                     } else {
-                        // region 这里判断 111111111111
                         if (ruleIpArray[i].equalsIgnoreCase(ipdata[i])) {
                             isFind = true;
                         } else {
                             isFind = false;
                             break;
                         }
-                        //endregion
                     }
                 }
                 // 包含 [*] 的
@@ -185,14 +182,12 @@ public class IPRule {
                             throw new Exception("IP中的*部分：不能以*开头，不能有两个**，只能以*结尾。");
                         }
                     } else {
-                        // region 这里判断22222222222222
                         if (ipdata[i].startsWith(ruleIpArray[i].replace("*", ""))) {
                             isFind = true;
                         } else {
                             isFind = false;
                             break;
                         }
-                        // endregion
                     }
                 }
                 // 包含 [-] 的
@@ -234,14 +229,12 @@ public class IPRule {
                                 break;
                             }
                         }
-                        // endregion
                     }
                 } else {
                     isFind = false;
                     break;
                 }
             }
-            // endregion
             if (isFind) {
                 return retValue;//IP规则中 :后面的 yes/no 对应的 true false
             }
