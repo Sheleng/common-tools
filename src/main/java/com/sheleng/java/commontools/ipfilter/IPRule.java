@@ -178,7 +178,9 @@ public class IPRule {
                 // 包含 [*] 的
                 else if (AA && !BB && !CC) {
                     if (!ruleIpArray[i].equalsIgnoreCase("*")) {
-                        if (ruleIpArray[i].startsWith("*") || !ruleIpArray[i].endsWith("*") || ruleIpArray[i].contains("**")) {
+                        if (ruleIpArray[i].startsWith("*")
+                                || !ruleIpArray[i].endsWith("*")
+                                || ruleIpArray[i].contains("**")) {
                             throw new Exception("IP中的*部分：不能以*开头，不能有两个**，只能以*结尾。");
                         }
                     } else {
