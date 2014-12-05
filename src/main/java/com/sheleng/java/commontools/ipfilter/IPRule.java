@@ -100,7 +100,6 @@ public class IPRule {
             }
             return true;
         }
-
     }
 
     static class Regex {
@@ -116,17 +115,12 @@ public class IPRule {
     }
 
     /**
-     * <pre>
-     * 判断指定的IP是否在指定的规则下允许的(三个特殊符号 -?*）
-     * rule[192.*.1.236-239:yes;192.*.1.226:no;218.85.*.*:no]最后一个不要加";"分号
-     * 前面的规则优先级高
-     * 注意，规则中的 * - ? 不能同时存在于同一个段内 如: 192.168.*?.123 会出错
-     * 号在同一段内只能有一个, 如 192.16*.1.*,  192.1**.1.1 是错误的，可以用 ?号代替
-     * 	<param name="rule">(192.*.1.236-239:yes;192.*.1.226:no;218.85.*.*:no) 最后一个规则不要再多加";"分号</param>
-     * 	<param name="ip">192.168.1.237(不正确的IP会出错)</param>
-     * </pre>
+     * 判断指定的IP是否符合指定的规则(三个特殊符号 - ? *),例如：
+     * [192.*.1.236-239:yes;192.*.1.226:no;218.85.*.*:no]最后一个不要加";"分号
+     * 其中，前面的规则优先级高
+     * 规则中的 - ? * 不能同时存在于同一个段内 如: 192.168.*?.123 会抛出异常。
+     * 特殊符号在同一段内只能有一个, 如 192.16*.1.*,  192.1**.1.1 是错误的，但是可以用?号代替
      */
-
     public static boolean isAllowIP(String rule, String ip) throws Exception {
         String[] ruleArray = StringUtils.split(rule, ";");
         return isAllowIP(ruleArray, ip);
