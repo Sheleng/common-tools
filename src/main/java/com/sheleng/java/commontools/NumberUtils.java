@@ -1,7 +1,6 @@
 package com.sheleng.java.commontools;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -270,9 +269,11 @@ public class NumberUtils {
         if (number == null) {
             throw new IllegalArgumentException("number == null.");
         }
+
         if (!FORMAT_TYPE.contains(base)) {
             throw new RuntimeException("No support format type = " + base);
         }
+
         StringBuffer buffer = new StringBuffer();
         long value = number.longValue();
         while (value >= base) {
@@ -282,21 +283,14 @@ public class NumberUtils {
         if (value >= 0) {
             buffer.append(FORMAT_KEY.charAt((int) value));
         }
+
         String head = "";
         if (ignoreHead == false) {
             switch (base) {
-                case 2:
-                    head = "b";
-                    break;
-                case 8:
-                    head = "0";
-                    break;
-                case 10:
-                    head = "d";
-                    break;
-                case 16:
-                    head = "0x";
-                    break;
+                case 2:  head = "b";  break;
+                case 8:  head = "0";  break;
+                case 10: head = "d";  break;
+                case 16: head = "0x"; break;
             }
         }
         return head + buffer.reverse().toString();
