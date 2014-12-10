@@ -1,5 +1,10 @@
 package com.sheleng.java.commontools;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * NumberUtils
  *
@@ -11,6 +16,9 @@ public class NumberUtils {
     public static final short U_BYTE_MIN_VALUE = 0, U_BYTE_MAX_VALUE = 255;
     public static final int U_SHORT_MIN_VALUE = 0, U_SHORT_MAX_VALUE = 65535;
     public static final long U_INT_MIN_VALUE = 0, U_INT_MAX_VALUE = 4294967295L;
+
+    private static final String FORMAT_KEY = "0123456789ABCDEF";
+    private static final Set<Integer> FORMAT_TYPE = new HashSet<>(Arrays.asList(2, 8, 10, 16));
 
     /**
      * 取消默认构造函数
@@ -26,8 +34,7 @@ public class NumberUtils {
      * @return 无符号byte，由short类型替代
      */
     public static short sByte2uByte(byte sByte) {
-        short uByte = (short) (sByte & 0x00FF);
-        return uByte;
+        return (short) (sByte & 0x00FF);
     }
 
     /**
@@ -43,8 +50,7 @@ public class NumberUtils {
         if (uByte > U_BYTE_MAX_VALUE) {
             throw new RuntimeException("illegal uByte = " + uByte);
         }
-        byte sByte = (byte) (uByte & 0x00FF);
-        return sByte;
+        return (byte) (uByte & 0x00FF);
     }
 
     /**
@@ -54,8 +60,7 @@ public class NumberUtils {
      * @return 无符号short，由int类型替代
      */
     public static int sShort2uShort(short sShort) {
-        int uShort = (int) (sShort & 0x0000FFFF);
-        return uShort;
+        return (int) (sShort & 0x0000FFFF);
     }
 
     /**
@@ -71,8 +76,7 @@ public class NumberUtils {
         if (uShort > U_SHORT_MAX_VALUE) {
             throw new RuntimeException("illegal uShort = " + uShort);
         }
-        short sShort = (short) (uShort & 0x0000FFFF);
-        return sShort;
+        return (short) (uShort & 0x0000FFFF);
     }
 
     /**
@@ -82,8 +86,7 @@ public class NumberUtils {
      * @return 无符号int，由long类型替代
      */
     public static long sInt2uInt(int sInt) {
-        long uInt = sInt & 0x00000000FFFFFFFFL;
-        return uInt;
+        return sInt & 0x00000000FFFFFFFFL;
     }
 
     /**
@@ -99,8 +102,7 @@ public class NumberUtils {
         if (uInt > U_INT_MAX_VALUE) {
             throw new RuntimeException("illegal uInt = " + uInt);
         }
-        int sInt = (int) (uInt & 0x00000000FFFFFFFFL);
-        return sInt;
+        return (int) (uInt & 0x00000000FFFFFFFFL);
     }
 
     /**
@@ -259,5 +261,44 @@ public class NumberUtils {
             }
             return ret;
         }
+    }
+
+    /**
+     * 返回将数值转化成指定进制格式的字符串表示
+     */
+    public static <T extends Number> String format(T number, int base, boolean ignoreHead) {
+        if (number == null) {
+            throw new IllegalArgumentException("number == null.");
+        }
+        if (!FORMAT_TYPE.contains(base)) {
+            throw new RuntimeException("No support format type = " + base);
+        }
+        StringBuffer buffer = new StringBuffer();
+        long value = number.longValue();
+        while (value >= base) {
+            buffer.append(FORMAT_KEY.charAt((int) (value % base)));
+            value /= base;
+        }
+        if (value >= 0) {
+            buffer.append(FORMAT_KEY.charAt((int) value));
+        }
+        String head = "";
+        if (ignoreHead == false) {
+            switch (base) {
+                case 2:
+                    head = "b";
+                    break;
+                case 8:
+                    head = "0";
+                    break;
+                case 10:
+                    head = "d";
+                    break;
+                case 16:
+                    head = "0x";
+                    break;
+            }
+        }
+        return head + buffer.reverse().toString();
     }
 }
