@@ -25,7 +25,8 @@ public class StringUtils {
      * @return 由byte数组转出的字符串
      * @throws IllegalArgumentException,UnsupportedEncodingException
      */
-    public static String bytes2string(byte[] source, String charsetName) throws IllegalArgumentException, UnsupportedEncodingException {
+    public static String bytes2string(byte[] source, String charsetName)
+            throws IllegalArgumentException, UnsupportedEncodingException {
         if (source == null) {
             throw new IllegalArgumentException("source == null.");
         }
@@ -45,7 +46,8 @@ public class StringUtils {
      * @return 由字符串转出的byte数组
      * @throws IllegalArgumentException,UnsupportedEncodingException
      */
-    public static byte[] string2bytes(String source, String charsetName) throws IllegalArgumentException, UnsupportedEncodingException {
+    public static byte[] string2bytes(String source, String charsetName)
+            throws IllegalArgumentException, UnsupportedEncodingException {
         if (source == null) {
             throw new IllegalArgumentException("source == null.");
         }
