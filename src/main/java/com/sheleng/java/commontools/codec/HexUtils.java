@@ -8,8 +8,6 @@ import com.sheleng.java.commontools.codec.digest.DigestException;
  * @author Sheleng
  * @version 0.0.1
  */
-
-
 public class HexUtils {
 
     private static final char[] DIGITS_LOWER =
